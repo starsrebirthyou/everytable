@@ -1,5 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>mainMenu</title>
+</head>
+<body>
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
   <div class="container-fluid">
     <a class="navbar-brand" href="/">Webjjang Co.</a>
@@ -23,17 +31,17 @@
         <li class="nav-item">
           <a class="nav-link" href="/image/list.do">이미지</a>
         </li>
-        <c:if test="${!empty login && login.gradeNo == 9 }">
-        <!-- 관리자 메뉴 -->
-	        <li class="nav-item">
-	          <a class="nav-link" href="/member/list.do">회원관리</a>
-	        </li>
+        <c:if test="${!empty login && login.gradeNo == 9}">
+          <!-- 관리자 메뉴 -->
+          <li class="nav-item">
+            <a class="nav-link" href="/member/list.do">회원관리</a>
+          </li>
         </c:if>
       </ul>
       <ul class="navbar-nav d-flex justify-content-end">
-      <!-- empty는 객체가 null 이거나 length나 size가 0인 상태 -->
-      	<c:if test="${empty login }">
-	      	<!-- 로그인을 하지 않았을 때 메뉴 시작 -->
+	  <!-- empty는 객체가 null이거나 length나 size가 0인 상태 -->
+        <c:if test="${empty login}">
+        		<!-- 로그인을 하지 않았을 떄 메뉴 시작 -->
 	        <li class="nav-item">
 	          <a class="nav-link" href="/member/loginForm.do">로그인</a>
 	        </li>
@@ -41,31 +49,44 @@
 	          <a class="nav-link" href="/member/writeForm.do">회원가입</a>
 	        </li>
 	        <li class="nav-item">
-	          <a class="nav-link" href="/member/searchIdForm.do">아이디찾기</a>
+	          <a class="nav-link" href="/member/idSearchForm.do">아이디 찾기</a>
 	        </li>
 	        <li class="nav-item">
-	          <a class="nav-link" href="/member/searchPwForm.do">비밀번호찾기</a>
+	          <a class="nav-link" href="/member/pwSearchForm.do">비밀번호 찾기</a>
+	          <!-- 로그인을 하지 않았을 떄 메뉴 끝 -->
 	        </li>
-	      	<!-- 로그인을 하지 않았을 때 메뉴 끝 -->
-      	</c:if>
-      	<!-- empty는 객체가 null 이거나 length나 size가 0인 상태 -->
-      	<c:if test="${!empty login }">
-	      	<!-- 로그인을 한 경우의 메뉴 시작 -->
-	        <li class="nav-item">
-	          <a class="nav-link" href="/member/view.do">${login.name }(${login.gradeName })</a>
+        </c:if>
+      </ul>
+      <ul class="navbar-nav d-flex justify-content-end">
+	  <!-- empty는 객체가 null이거나 length나 size가 0인 상태 -->
+        <c:if test="${!empty login}">
+        		<!-- 로그인을 한 경우 메뉴 시작 -->
+        		<li class="nav-item">
+	          <a class="nav-link" href="/member/view.do">${login.name}(${login.gradeName})</a>
 	        </li>
 	        <li class="nav-item">
 	          <a class="nav-link" href="/member/logout.do">로그아웃</a>
 	        </li>
 	        <li class="nav-item">
-	          <a class="nav-link" href="/member/searchIdForm.do">비밀번호 변경</a>
+	          <a class="nav-link" href="/member/pwChangeForm.do">비밀번호 변경</a>
 	        </li>
 	        <li class="nav-item">
-	          <a class="nav-link" href="/member/searchPwForm.do">회원 탈퇴</a>
+	          <a class="nav-link" href="/member/signoutForm.do">회원탈퇴</a>
+	          <!-- 로그인을 한 경우 메뉴 끝 -->
 	        </li>
-	      	<!-- 로그인을 한 경우의 메뉴 끝 -->
-      	</c:if>
+        </c:if>
       </ul>
+      <div class="d-flex" style="background: yellow; width: 100px">
+      
+      </div>
     </div>
   </div>
 </nav>
+<!-- body 이후의 CopyRight나 회사 주소를 추가해서 나타나게 한다. -->
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-bottom">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">CopyRight Webjjang.com</a>
+  </div>
+</nav>
+</body>
+</html>
