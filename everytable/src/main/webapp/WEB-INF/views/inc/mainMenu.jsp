@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
   <div class="container-fluid">
     <a class="navbar-brand" href="/">Webjjang Co.</a>
