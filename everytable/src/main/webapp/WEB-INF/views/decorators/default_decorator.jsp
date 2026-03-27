@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>everytable:<decorator:title /></title>
+<title>everytable<decorator:title /></title>
 <!-- web 라이브러리를 등록 -->
 <!-- Bootstrap 라이브러리 등록 --------- -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
