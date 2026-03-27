@@ -1,6 +1,6 @@
 package everytable.member.vo;
 
-public class MemberVO {
+public class UserVO {
 
 	private String id;
 	private String pw; // 현재 비밀번호

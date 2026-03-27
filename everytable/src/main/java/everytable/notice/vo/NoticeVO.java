@@ -2,7 +2,8 @@ package everytable.notice.vo;
 
 public class NoticeVO {
 
-	private long no;  // 글 번호
+	private long rno;  // 글 순서 번호
+	private long no;  // 글 고유 번호
 	private String title;  // 제목
 	private String content;  // 내용
 	private String startDate;  // 공지 시작일
@@ -10,6 +11,12 @@ public class NoticeVO {
 	private String writeDate;  // 공지 최초 등록일
 	private String updateDate;  // 공지 수정일
 	
+	public long getRno() {
+		return rno;
+	}
+	public void setRno(long rno) {
+		this.rno = rno;
+	}
 	public long getNo() {
 		return no;
 	}
@@ -55,8 +62,8 @@ public class NoticeVO {
 	
 	@Override
 	public String toString() {
-		return "NoticeVO [no=" + no + ", title=" + title + ", content=" + content + ", startDate=" + startDate
-				+ ", endDate=" + endDate + ", writeDate=" + writeDate + ", updateDate=" + updateDate + "]";
+		return "NoticeVO [rno=" + rno + ", no=" + no + ", title=" + title + ", content=" + content + ", startDate="
+				+ startDate + ", endDate=" + endDate + ", writeDate=" + writeDate + ", updateDate=" + updateDate + "]";
 	}
 	
 }
