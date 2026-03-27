@@ -44,12 +44,6 @@ public class NoticeController implements Controller {
 				// - 1. PageObject 생성  2. request에서 page / 검색 정보를 받아서 세팅
 				PageObject pageObject = PageObject.getInstance(request);
 				
-				// period 정보를 받아서 세팅
-				String period = request.getParameter("period");
-				// period가 null이나 ""이 아니고 length = 0이 아니면 처리. null이나 ""이면 pre(기본값)으로 세팅
-				if (period != null && !period.equals("")) pageObject.setPeriod(period);
-//				else pageObject.setPeriod("per");
-				
 				// 생성된 Service를 가져와서 실행 -> Execute가 실행하면 로그를 남긴다.
 				// List<NoticeVO> list = new NoticeListService().service(null);.
 				request.setAttribute("list", Execute.execute(Init.getService(uri), pageObject));
@@ -83,8 +77,6 @@ public class NoticeController implements Controller {
 				vo = new NoticeVO();
 				vo.setTitle(request.getParameter("title"));
 				vo.setContent(request.getParameter("content"));
-				vo.setStartDate(request.getParameter("startDate"));
-				vo.setEndDate(request.getParameter("endDate"));
 				
 				// 처리 NoticeWriteService - NoticeDAO
 				// 등록이 되거나 오류가 난다.
@@ -116,8 +108,6 @@ public class NoticeController implements Controller {
 				vo.setNo(Long.parseLong(request.getParameter("no")));
 				vo.setTitle(request.getParameter("title"));
 				vo.setContent(request.getParameter("content"));
-				vo.setStartDate(request.getParameter("startDate"));
-				vo.setEndDate(request.getParameter("endDate"));
 				
 				// DB 데이터 수정 - update, insert, delete 쿼리를 실행하면 int 데이터가 나온다.
 				result = (Integer) Execute.execute(Init.getService(uri), vo);

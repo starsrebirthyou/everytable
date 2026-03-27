@@ -25,19 +25,15 @@ public class NoticeDAO extends DAO {
 		
 		// 3. 실행할 쿼리 작성
 		// 3-1. 원본 데이터 정렬해서 가져오기
-		String sql = "select no, title, to_char(startDate, 'yyyy-mm-dd') startDate, "
-				+ " to_char(endDate, 'yyyy-mm-dd') endDate, "
-				+ " to_char(updateDate, 'yyyy-mm-dd') updateDate from notice ";
-		// period 처리
-		// pre : 현재공지, old : 지난공지 , res : 예약공지, all : 전체공지
-		sql += period(pageObejct.getPeriod());
-		
-		sql += " order by updateDate desc";  // 최근 수정 날짜로 정렬
+		String sql = "select no, title, to_char(write_date, 'yyyy-mm-dd') write_date, n.cate_no,"
+				+ " c.cate_name "
+				+ " from notice n, notice_cate c where n.cate_no = c.cate_no "
+				+ " order by no desc";
 		// 3-2. 순서 번호를 붙인다.
-		sql = "select rownum rnum, no, title, startDate, endDate, updateDate "
+		sql = "select rownum rnum, no, title, write_date, cate_no, cate_name "
 			+ " from(" + sql + ")";
 		// 3-3. page에 맞는 데이터만 가져온다.
-		sql = "select rnum, no, title, startDate, endDate, updateDate "
+		sql = "select rnum, no, title, write_date, cate_no, cate_name "
 			+ " from(" + sql + ") where rnum between ? and ?";
 		
 		// 4. 준비된 실행 객체
@@ -57,9 +53,9 @@ public class NoticeDAO extends DAO {
 				// 데이터 저장
 				vo.setNo(rs.getLong("no"));
 				vo.setTitle(rs.getString("title"));
-				vo.setStartDate(rs.getString("startDate"));
-				vo.setEndDate(rs.getString("endDate"));
-				vo.setUpdateDate(rs.getString("updateDate"));
+				vo.setWriteDate(rs.getString("write_date"));
+				vo.setCateNo(rs.getLong("cate_no"));
+				vo.setCateName(rs.getString("cate_name"));
 				// list에 담는다
 				list.add(vo);
 			}  // while문 끝
@@ -85,11 +81,7 @@ public class NoticeDAO extends DAO {
 		con = DB.getConnection();
 		
 		// 3. 실행할 쿼리 작성
-		String sql = "select count(*) from notice ";
-		
-		// period 처리
-		// pre : 현재공지, old : 지난공지 , res : 예약공지, all : 전체공지
-		sql += period(pageObejct.getPeriod());
+		String sql = "select count(*) from notice";
 				
 		// 4. 준비된 실행 객체
 		pstmt = con.prepareStatement(sql);
@@ -110,23 +102,6 @@ public class NoticeDAO extends DAO {
 	}  // list() 끝
 	
 	
-	// 1-2. 공지 종류 처리 메서드
-	public String period(String period) {
-		String sql = "";
-		
-		if(!period.equals("all")) {
-			sql = " where ";
-			if(period.equals("pre"))  // 현재 공지 - 현재 날짜가 시작일과 종료일 사이에 있다
-				sql += " trunc(startDate) <= trunc(sysdate) and trunc(endDate) >= trunc(sysdate) ";
-			if(period.equals("old"))  // 지난 공지 - 종료일이 현재 날짜보다 작다
-				sql += " trunc(endDate) < trunc(sysdate) ";
-			if(period.equals("res"))  // 예약 공지 - 현재 날짜가 시작 날짜보다 작다
-				sql += " trunc(startDate) > trunc(sysdate) ";
-		}  // if 끝
-		
-		return sql;
-	}  // period() 끝
-	
 	// 2. 공지 보기
 	public NoticeVO view(Long no) throws Exception {
 		NoticeVO vo = null;
@@ -134,11 +109,9 @@ public class NoticeDAO extends DAO {
 		// 1. 2. DB 연결
 		con = DB.getConnection();
 		// 3. sql 작성
-		String sql = "select no, title, content, to_char(startDate, 'yyyy-mm-dd') startDate, "
-				+ " to_char(endDate, 'yyyy-mm-dd') endDate, "
-				+ " to_char(writeDate, 'yyyy-mm-dd') writeDate, "
-				+ " to_char(updateDate, 'yyyy-mm-dd') updateDate from notice "
-				+ " where no = ?";
+		String sql = "select no, title, content, to_char(write_date, 'yyyy-mm-dd') write_date, "
+				+ " to_char(update_date, 'yyyy-mm-dd') update_date, n.cate_no, c.cate_name "
+				+ " from notice n, notice_cate c where no = ? and n.cate_no = c.cate_no";
 		// 4. 실행 객체 & 데이터 세팅
 		pstmt = con.prepareStatement(sql);
 		pstmt.setLong(1, no);
@@ -150,10 +123,10 @@ public class NoticeDAO extends DAO {
 			vo.setNo(rs.getLong("no"));
 			vo.setTitle(rs.getString("title"));
 			vo.setContent(rs.getString("content"));
-			vo.setStartDate(rs.getString("startDate"));
-			vo.setEndDate(rs.getString("endDate"));
-			vo.setWriteDate(rs.getString("writeDate"));
-			vo.setUpdateDate(rs.getString("updateDate"));
+			vo.setCateNo(rs.getLong("cate_no"));
+			vo.setCateName(rs.getString("cate_name"));
+			vo.setWriteDate(rs.getString("write_date"));
+			vo.setUpdateDate(rs.getString("update_date"));
 		}  // if 끝
 		// 7. 닫기
 		DB.close(con, pstmt, rs);
@@ -170,15 +143,14 @@ public class NoticeDAO extends DAO {
 		con = DB.getConnection();
 		
 		// 3. sql 작성
-		String sql = "insert into notice(no, title, content, startDate, endDate) "
-				+ " values(notice_seq.nextval, ?, ?, ?, ?)";
+		String sql = "insert into notice(no, title, content, cate_no, write_date, update_date) "
+				+ " values(notice_seq.nextval, ?, ?, ?, sysdate, null)";
 		
 		// 4. 실행 객체 & 데이터 세팅
 		pstmt = con.prepareStatement(sql);
 		pstmt.setString(1, vo.getTitle());
 		pstmt.setString(2, vo.getContent());
-		pstmt.setString(3, vo.getStartDate());
-		pstmt.setString(4, vo.getEndDate());
+		pstmt.setLong(3, vo.getCateNo());
 		
 		// 5. 실행
 		result = pstmt.executeUpdate();
@@ -200,15 +172,15 @@ public class NoticeDAO extends DAO {
 		con = DB.getConnection();
 		
 		// 3. sql 작성
-		String sql = "update notice set title = ?, content = ?, startDate = ?, endDate = ?, "
-				+ " updateDate = sysdate where no = ? ";
+		String sql = "update notice set title = ?, content = ?, cate_no = ?, update_date = ? "
+				+ "  where no = ? ";
 		
 		// 4. 실행 객체 & 데이터 세팅
 		pstmt = con.prepareStatement(sql);
 		pstmt.setString(1, vo.getTitle());
 		pstmt.setString(2, vo.getContent());
-		pstmt.setString(3, vo.getStartDate());
-		pstmt.setString(4, vo.getEndDate());
+		pstmt.setLong(3, vo.getCateNo());
+		pstmt.setString(4, vo.getUpdateDate());
 		pstmt.setLong(5, vo.getNo());
 		
 		// 5. 실행
