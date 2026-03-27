@@ -25,16 +25,18 @@ public class NoticeDAO extends DAO {
 		
 		// 3. 실행할 쿼리 작성
 		// 3-1. 원본 데이터 정렬해서 가져오기
-		String sql = "select no, title, to_char(write_date, 'yyyy-mm-dd') write_date, n.cate_no,"
+		String sql = "select n.no, n.title, to_char(n.write_date, 'yyyy-mm-dd') write_date, n.cate_no,"
 				+ " c.cate_name "
-				+ " from notice n, notice_cate c where n.cate_no = c.cate_no "
-				+ " order by no desc";
+				+ " from notice n, notice_cate c where (n.cate_no = c.cate_no) ";
+		// 검색 처리를 한다. -> getTotalRow()의 검색처리와 같다. -> 반복된다. 메서드를 만든다.
+		sql += category(pageObejct);
+		sql += " order by n.no desc";
 		// 3-2. 순서 번호를 붙인다.
 		sql = "select rownum rnum, no, title, write_date, cate_no, cate_name "
 			+ " from(" + sql + ")";
 		// 3-3. page에 맞는 데이터만 가져온다.
 		sql = "select rnum, no, title, write_date, cate_no, cate_name "
-			+ " from(" + sql + ") where rnum between ? and ?";
+			+ " from(" + sql + ") where rnum between ? and ? ";
 		
 		// 4. 준비된 실행 객체
 		pstmt = con.prepareStatement(sql);
@@ -81,7 +83,11 @@ public class NoticeDAO extends DAO {
 		con = DB.getConnection();
 		
 		// 3. 실행할 쿼리 작성
-		String sql = "select count(*) from notice";
+		String sql = "select count(*) from notice n, notice_cate c "
+				+ " where n.cate_no = c.cate_no ";
+		
+		// 검색 처리를 한다. -> list()의 검색처리와 같다. -> 반복된다. 메서드를 만든다.
+		sql += category(pageObejct);
 				
 		// 4. 준비된 실행 객체
 		pstmt = con.prepareStatement(sql);
@@ -100,6 +106,25 @@ public class NoticeDAO extends DAO {
 		
 		return totalRow;
 	}  // list() 끝
+	
+	
+	// 1-2. 카테고리를 위한 메서드
+	public String category(PageObject pageObject) {
+		String sql = "";
+		
+		String key = pageObject.getKey();
+		
+	    // key가 null이거나 "0"(전체)이면 조건 없음
+	    if (key != null && !key.equals("0") && !key.isEmpty()) {
+		    	sql = " and ";
+		    	if(key.equals("1")) sql += " n.cate_no = 1 ";
+		    	if(key.equals("2")) sql += " n.cate_no = 2 ";
+		    	if(key.equals("3")) sql += " n.cate_no = 3 ";
+		    	if(key.equals("4")) sql += " n.cate_no = 4 ";
+	    }
+	    
+		return sql;
+	}  // search() 끝
 	
 	
 	// 2. 공지 보기

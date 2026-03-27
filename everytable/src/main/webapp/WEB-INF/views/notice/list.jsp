@@ -41,7 +41,19 @@ $(function(){
 		$(this).addClass("table-success");
 	}).mouseout(function(){
 		$(this).removeClass("table-success");
-	})
+	});
+	// 카테고리 버튼 클릭
+    $("#key button").click(function(e){
+        e.preventDefault();  // 폼 기본 제출 방지
+        let key = $(this).val();  // 버튼의 value 값 수집
+        location = "list.do?key=" + key + "&perPageNum=${pageObject.perPageNum}";
+    });
+ 	// 현재 key와 버튼 value가 같으면 활성화
+    $("#key button").each(function(){
+        if($(this).val() == "${pageObject.key}"){
+            $(this).removeClass("btn-outline-success").addClass("btn-success");
+        }
+    });
 })
 </script>
 </head>
@@ -49,20 +61,18 @@ $(function(){
 
 <!-- 메인 메뉴 부분 : default_decorator에 등록 -->
 
-    <h2>공지사항 리스트</h2>
+    <h2>공지사항</h2>
   
-    <div class="btn-group" style="margin-top: 20px; margin-bottom: 10px;">
-      <a href="list.do?cateNo=0" class="btn btn-info">전체</a>
-      <a href="list.do?cateNo=1" class="btn btn-primary" style="margin-left: 5px">서비스 안내</a>
-      <a href="list.do?cateNo=2" class="btn btn-secondary" style="margin-left: 5px">시스템 점검</a>
-      <a href="list.do?cateNo=3" class="btn btn-success" style="margin-left: 5px">이벤트/혜택</a>
-      <a href="list.do?cateNo=4" class="btn btn-info" style="margin-left: 5px">약관 변경</a>
-      <a href="list.do?cateNo=5" class="btn btn-info" style="margin-left: 5px">업데이트</a>
-    </div>
+    <form class="btn-group" style="margin-top: 20px; margin-bottom: 10px;" name="key" id="key">
+      <button class="btn btn-outline-success" value="0">전체</button >
+      <button class="btn btn-outline-success" style="margin-left: 5px" value="1">공지사항</button >
+      <button class="btn btn-outline-success" style="margin-left: 5px" value="2">시스템</button >
+      <button class="btn btn-outline-success" style="margin-left: 5px" value="3">이벤트</button >
+      <button class="btn btn-outline-success" style="margin-left: 5px" value="4">업데이트</button >
+    </form>
     <table class="table">
 	  <thead class="table-dark">
 		<tr>
-			<!-- <th>번호</th> -->
 			<th>제목</th>
 			<th>등록일</th>
 		</tr>
@@ -77,7 +87,7 @@ $(function(){
 		<c:forEach items="${list}" var="vo">
 			<tr class="dataRow" data-no="${vo.no}">
 				<%-- <td class="no">${vo.no}</td> --%>
-				<td>[${vo.cateName}]${vo.title}</td>
+				<td>[${vo.cateName}] ${vo.title}</td>
 				<td>${vo.writeDate}</td>
 				<td>${vo.updateDate}</td>
 			</tr>
@@ -86,11 +96,11 @@ $(function(){
 	  </tbody>
     </table>
   <div>
-  	<pageNav:pageNav listURI="list.do" pageObject="${pageObject}" query="&cate=${vo.cateNo}"/>
+  	<pageNav:pageNav listURI="list.do" pageObject="${pageObject}"/>
   </div>
-  <c:if test="${!empty login && login.gradeNo == 9}">
+  <!-- <c:if test="${!empty login && login.gradeNo == 9}"> -->
 	<a href="writeForm.do?perPageNum=${pageObject.perPageNum}" class="btn btn-primary">공지 등록</a>
-  </c:if>
+  <!-- </c:if>  -->
   <a href="list.do" class="btn btn-success">새로고침</a>
 
 <%-- JSP의 주석 : 표현식으로 가져온 데이터 출력 --%>
