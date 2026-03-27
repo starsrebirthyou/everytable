@@ -51,21 +51,20 @@ $(function(){
 
     <h2>공지사항 리스트</h2>
   
-    <c:if test="${login.gradeNo == 9}">
-	    <div class="btn-group" style="margin-top: 20px; margin-bottom: 10px">
-	      <a href="list.do?period=pre" class="btn btn-primary">현재공지</a>
-	      <a href="list.do?period=old" class="btn btn-secondary">지난공지</a>
-	      <a href="list.do?period=res" class="btn btn-success">예약공지</a>
-	      <a href="list.do?period=all" class="btn btn-info">전체공지</a>
-	    </div>
-	</c:if>
+    <div class="btn-group" style="margin-top: 20px; margin-bottom: 10px;">
+      <a href="list.do?cateNo=0" class="btn btn-info">전체</a>
+      <a href="list.do?cateNo=1" class="btn btn-primary" style="margin-left: 5px">서비스 안내</a>
+      <a href="list.do?cateNo=2" class="btn btn-secondary" style="margin-left: 5px">시스템 점검</a>
+      <a href="list.do?cateNo=3" class="btn btn-success" style="margin-left: 5px">이벤트/혜택</a>
+      <a href="list.do?cateNo=4" class="btn btn-info" style="margin-left: 5px">약관 변경</a>
+      <a href="list.do?cateNo=5" class="btn btn-info" style="margin-left: 5px">업데이트</a>
+    </div>
     <table class="table">
 	  <thead class="table-dark">
 		<tr>
 			<!-- <th>번호</th> -->
 			<th>제목</th>
-			<th>공지기간</th>
-			<th>최종수정일</th>
+			<th>등록일</th>
 		</tr>
 	  </thead>
 	  <tbody>
@@ -78,8 +77,8 @@ $(function(){
 		<c:forEach items="${list}" var="vo">
 			<tr class="dataRow" data-no="${vo.no}">
 				<%-- <td class="no">${vo.no}</td> --%>
-				<td>${vo.title}</td>
-				<td>${vo.startDate} ~ ${vo.endDate}</td>
+				<td>[${vo.cateName}]${vo.title}</td>
+				<td>${vo.writeDate}</td>
 				<td>${vo.updateDate}</td>
 			</tr>
 		  </c:forEach>
@@ -87,10 +86,10 @@ $(function(){
 	  </tbody>
     </table>
   <div>
-  	<pageNav:pageNav listURI="list.do" pageObject="${pageObject}" query="&period=${pageObject.period}"/>
+  	<pageNav:pageNav listURI="list.do" pageObject="${pageObject}" query="&cate=${vo.cateNo}"/>
   </div>
   <c:if test="${!empty login && login.gradeNo == 9}">
-	<a href="writeForm.do?perPageNum=${pageObject.perPageNum}" class="btn btn-primary">글 등록</a>
+	<a href="writeForm.do?perPageNum=${pageObject.perPageNum}" class="btn btn-primary">공지 등록</a>
   </c:if>
   <a href="list.do" class="btn btn-success">새로고침</a>
 

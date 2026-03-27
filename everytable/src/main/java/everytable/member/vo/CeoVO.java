@@ -1,19 +1,22 @@
 package everytable.member.vo;
 
-public class UserVO {
+public class CeoVO {
 
-	private String id; 		   // 일반회원 아이디
-	private String pw; 		   // 현재 비밀번호
-	private String newPw;	   // 바꿀 비밀번호
-	private String name; 	   // 이름
-	private String gender;     // 성별
-	private String birth;  	   // 생년월일
-	private String tel; 		   // 전화번호
-	private String email; 	   // 이메일
-	private String regDate; 	   // 가입일
-	private String conDate; 	   // 최근 로그인 날짜
-	private String status;  	   // 상태
-	private Integer gradeNo;   // 등급 번호
+	private String id;  // 매장점주 아이디
+	private String pw; // 현재 비밀번호
+	private String newPw; // 바꿀 비밀번호
+	private String name;  // 이름
+	private String gender;  // 성별
+	private String birth;  // 생년월일
+	private String tel;  // 전화번호
+	private String email;  // 이메일
+	private String storeName;  // 매장 이름
+	private String storeCate;  // 매장 카테고리
+	private String storeAddr;  // 매장 위치(주소)
+	private String regDate;  // 가입일
+	private String conDate;  // 최근 로그인 날짜
+	private String status;  // 상태
+	private Integer gradeNo;  // 등급 번호
 	private String gradeName;  // 등급 이름
 	
 	public String getId() {
@@ -64,6 +67,24 @@ public class UserVO {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	public String getStoreName() {
+		return storeName;
+	}
+	public void setStoreName(String storeName) {
+		this.storeName = storeName;
+	}
+	public String getStoreCate() {
+		return storeCate;
+	}
+	public void setStoreCate(String storeCate) {
+		this.storeCate = storeCate;
+	}
+	public String getStoreAddr() {
+		return storeAddr;
+	}
+	public void setStoreAddr(String storeAddr) {
+		this.storeAddr = storeAddr;
+	}
 	public String getRegDate() {
 		return regDate;
 	}
@@ -97,9 +118,10 @@ public class UserVO {
 	
 	@Override
 	public String toString() {
-		return "MemberVO [id=" + id + ", pw=" + pw + ", newPw=" + newPw + ", name=" + name + ", gender=" + gender
-				+ ", birth=" + birth + ", tel=" + tel + ", email=" + email + ", regDate=" + regDate + ", conDate="
-				+ conDate + ", status=" + status + ", gradeNo=" + gradeNo + ", gradeName=" + gradeName + "]";
+		return "CeoVO [id=" + id + ", pw=" + pw + ", newPw=" + newPw + ", name=" + name + ", gender=" + gender
+				+ ", birth=" + birth + ", tel=" + tel + ", email=" + email + ", storeName=" + storeName + ", storeCate="
+				+ storeCate + ", storeAddr=" + storeAddr + ", regDate=" + regDate + ", conDate=" + conDate + ", status="
+				+ status + ", gradeNo=" + gradeNo + ", gradeName=" + gradeName + "]";
 	}
 	
 }

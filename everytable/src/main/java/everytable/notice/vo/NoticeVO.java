@@ -2,21 +2,14 @@ package everytable.notice.vo;
 
 public class NoticeVO {
 
-	private long rno;  // 글 순서 번호
 	private long no;  // 글 고유 번호
 	private String title;  // 제목
 	private String content;  // 내용
-	private String startDate;  // 공지 시작일
-	private String endDate;  // 공지 종료일
 	private String writeDate;  // 공지 최초 등록일
 	private String updateDate;  // 공지 수정일
+	private long cateNo;  // 공지 유형 번호
+	private String cateName;  // 공지 유형 이름
 	
-	public long getRno() {
-		return rno;
-	}
-	public void setRno(long rno) {
-		this.rno = rno;
-	}
 	public long getNo() {
 		return no;
 	}
@@ -35,18 +28,6 @@ public class NoticeVO {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public String getStartDate() {
-		return startDate;
-	}
-	public void setStartDate(String startDate) {
-		this.startDate = startDate;
-	}
-	public String getEndDate() {
-		return endDate;
-	}
-	public void setEndDate(String endDate) {
-		this.endDate = endDate;
-	}
 	public String getWriteDate() {
 		return writeDate;
 	}
@@ -58,12 +39,24 @@ public class NoticeVO {
 	}
 	public void setUpdateDate(String updateDate) {
 		this.updateDate = updateDate;
+	}	
+	public long getCateNo() {
+		return cateNo;
+	}
+	public void setCateNo(long cateNo) {
+		this.cateNo = cateNo;
+	}	
+	public String getCateName() {
+		return cateName;
+	}
+	public void setCateName(String cateName) {
+		this.cateName = cateName;
 	}
 	
 	@Override
 	public String toString() {
-		return "NoticeVO [rno=" + rno + ", no=" + no + ", title=" + title + ", content=" + content + ", startDate="
-				+ startDate + ", endDate=" + endDate + ", writeDate=" + writeDate + ", updateDate=" + updateDate + "]";
+		return "NoticeVO [no=" + no + ", title=" + title + ", content=" + content + ", writeDate=" + writeDate
+				+ ", updateDate=" + updateDate + ", cateNo=" + cateNo + ", cateName=" + cateName + "]";
 	}
 	
 }
