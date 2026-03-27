@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>  
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
   <!-- 프로젝트 이름 -->
-  <display-name>servlet0309</display-name>
+  <display-name>everytable</display-name>
   <welcome-file-list> 
     <!-- 홈페이지 들어가면 서버이름이나 도메인을 사용하면 자동으로 요청되는 URI -->
     <welcome-file>main.do</welcome-file>
@@ -10,7 +10,7 @@
   <!-- servlet 객체 등록 : DispatchServlet -->
   <servlet>
   	<servlet-name>dispatchServlet</servlet-name>
-  	<servlet-class>com.webjjang.main.controller.DispatcherServlet</servlet-class>
+  	<servlet-class>everytable.main.controller.DispatcherServlet</servlet-class>
     	<!-- 서버가 실행될때 한번 불러라. init() 호출되서 실행된다. -->
   	<load-on-startup>1</load-on-startup>
   	
@@ -18,7 +18,7 @@
   	<multipart-config>
   		<!-- 업로드 임시 저장 경로 : 폴더가 반드시 존재하고 있어야 한다. 본인 컴에 맞게 수정
   		 	 업로드 파일이 작으면 메인메모리 사용, 크면 임시 파일로 저장해서 사용한다. -->
-  		<location>D:/leeyh/upload/temp</location>
+  		<location>D:/FullStack/upload/temp</location>
   		<!-- 최대 파일 크기(10MB-10*1024*1024) -->
   		<max-file-size>10485760</max-file-size>
   		<!--  최대 요청 크기 (100MB) -->
@@ -41,7 +41,7 @@
   <servlet>
   	<description>서버 시작 시 DB 불러주기, 객체 생성 / 저장 / 조립</description>
   	<servlet-name>init</servlet-name>
-  	<servlet-class>com.webjjang.main.controller.Init</servlet-class>
+  	<servlet-class>everytable.main.controller.Init</servlet-class>
   	<!-- 서버가 실행될때 한번 불러라. init() 호출되서 실행된다. -->
   	<load-on-startup>2</load-on-startup>
   </servlet>
@@ -49,7 +49,7 @@
 	<!-- 권한 처리를 위한 필터 -->
  	  <filter>
 	    <filter-name>authority</filter-name>
-	    <filter-class>com.webjjang.util.filter.AuthorityFilter</filter-class>
+	    <filter-class>everytable.util.filter.AuthorityFilter</filter-class>
 	  </filter>
 	
 	  <filter-mapping>

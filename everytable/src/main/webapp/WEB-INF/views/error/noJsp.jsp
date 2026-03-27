@@ -24,10 +24,9 @@
 	  <div class="card-header bg-dark text-white">요청 URL : ${url }</div>
 	  <div class="card-body">
 	  	요청하신 페이지의 JSP가 존재하지 않습니다.<br>
-	  	다시 시도해 보세요.<br>
-	  	지속적이 오류가 나는 경우 사이트 관리자에게 문의해주세요.(질문답변 게시판 이용)
+	  	다시 시도해 보세요.
 	  </div>
-	  <div class="card-footer">웹짱 사이트 담당자 : 이영환</div>
+	  <div class="card-footer">에브리테이블 사이트 담당자 : 이오</div>
 	</div>
 </div>
 </body>

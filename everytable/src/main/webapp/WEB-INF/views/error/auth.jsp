@@ -23,10 +23,9 @@
 		<h2>권한 오류</h2>
 	  <div class="card-header bg-dark text-white">요청 URL : ${url }</div>
 	  <div class="card-body">
-	  	페이지에 접근할 권한이 없습니다.<br>
-	  	사이트 담당자에게 문의해주세요.(질문답변 게시판 이용)
+	  	페이지에 접근할 권한이 없습니다.
 	  </div>
-	  <div class="card-footer">웹짱 사이트 담당자 : 이영환</div>
+	  <div class="card-footer">에브리테이블 사이트 담당자 : 이오</div>
 	</div>
 </div>
 </body>

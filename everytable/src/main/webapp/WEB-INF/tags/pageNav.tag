@@ -2,7 +2,7 @@
 <%@ tag trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ attribute name="pageObject" required="true"
- type="com.webjjang.util.page.PageObject" %>
+ type="everytable.util.page.PageObject" %>
 <%@ attribute name="listURI" required="true"
  type="java.lang.String" %>
 <%@ attribute name="query" required="false"
@@ -64,7 +64,7 @@
   	</li>
 	<c:forEach begin="${pageObject.startPage }" end="${pageObject.endPage }" var="cnt">
   	<li ${(pageObject.page == cnt)?"class=\"active page-item\"":" class=\"page-item\"" } 
-  	 data-page=${cnt } >
+  	 data-page=${cnt} >
   	 	<!-- 페이지와 cnt가 같으면 링크가 없음 -->
   	 	<c:if test="${pageObject.page == cnt }">
   			<a href="" onclick="return false" class="page-link"
